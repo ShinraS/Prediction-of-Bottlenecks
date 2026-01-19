@@ -3,6 +3,8 @@ import numpy as np
 import pandas as pd
 import tensorflow as tf
 import joblib
+import os
+os.environ['TF_USE_LEGACY_KERAS'] = '1'
 
 # Configuration
 st.set_page_config(page_title="Diagnostic Goulots BPI 2017", layout="wide")
