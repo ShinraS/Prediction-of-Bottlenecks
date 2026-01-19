@@ -53,4 +53,8 @@ Le modèle considère qu'un goulot d'étranglement est détecté lorsque le dél
 L'application ne se contente pas de donner un chiffre ; elle interprète le flux. Par exemple, des répétitions d'étapes avec un délai de 0 heure sont analysées comme des activités de routine normales (appels téléphoniques successifs), tandis qu'un retour à une étape précédente avec un délai important est signalé comme une anomalie de "re-work" (retraitement).
 
 ---
+<img width="1918" height="855" alt="proj1" src="https://github.com/user-attachments/assets/083b43e1-3819-4ae8-b613-7499c6c90617" />
+<img width="1902" height="857" alt="proj2" src="https://github.com/user-attachments/assets/13c0e463-691e-4906-850d-149ef992803a" />
+
+<img width="1918" height="848" alt="proj3" src="https://github.com/user-attachments/assets/40983331-33cd-4c53-bec8-a8b776bed03c" />
 
