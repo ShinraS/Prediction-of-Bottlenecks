@@ -1,19 +1,27 @@
-import pandas as pd
-import os
-os.environ['TF_USE_LEGACY_KERAS'] = '1'
-
 import streamlit as st
-import tensorflow as tf
 import numpy as np
 import joblib
+import os
 
-# Utilisation de l'import direct du moteur de sauvegarde Keras 2
-from tensorflow.keras.models import load_model
+# Configuration pour éviter les conflits Keras 3
+os.environ['TF_USE_LEGACY_KERAS'] = '1'
+
+import tensorflow as tf
+
+# Nouvelle méthode robuste pour charger le modèle
+def get_load_model():
+    try:
+        from tensorflow.keras.models import load_model
+        return load_model
+    except ImportError:
+        from tensorflow.python.keras.models import load_model
+        return load_model
 
 @st.cache_resource
 def load_resources():
-    # On charge le modèle avec compile=False pour éviter les erreurs d'optimiseur
-    model = load_model('models/model_multi_task.keras', compile=False)
+    loader = get_load_model()
+    # On utilise compile=False car on ne fait que de la prédiction
+    model = loader('models/model_multi_task.keras', compile=False)
     le_act = joblib.load('models/le_act.joblib')
     scaler_time = joblib.load('models/scaler_time.joblib')
     X_test = np.load('models/X_test.npy')
