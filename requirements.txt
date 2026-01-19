@@ -1,7 +1,7 @@
-tensorflow==2.15.0
+tensorflow<2.16
 streamlit
 pandas
-numpy
+numpy<2.0
 scikit-learn
 joblib
 pyarrow
