@@ -3,17 +3,24 @@ import numpy as np
 import joblib
 import os
 
-# 1. Forcer l'ancien moteur avant tout
+# Forcer l'ancien moteur
 os.environ['TF_USE_LEGACY_KERAS'] = '1'
 
-# 2. Importer Keras séparément de TF pour éviter le bug d'import
 import keras
 import tensorflow as tf
 
 @st.cache_resource
 def load_resources():
-    # On utilise directement keras.models au lieu de tf.keras.models
-    model = keras.models.load_model('models/model_multi_task.keras', compile=False)
+    model_path = 'models/model_multi_task.keras'
+    
+    try:
+        # Tentative 1 : Chargement standard
+        model = keras.models.load_model(model_path, compile=False)
+    except Exception:
+        # Tentative 2 : Forcer le format si la tentative 1 échoue
+        # Parfois nécessaire pour les modèles enregistrés avec d'anciennes versions
+        model = tf.keras.models.load_model(model_path, compile=False, custom_objects=None)
+    
     le_act = joblib.load('models/le_act.joblib')
     scaler_time = joblib.load('models/scaler_time.joblib')
     X_test = np.load('models/X_test.npy')
