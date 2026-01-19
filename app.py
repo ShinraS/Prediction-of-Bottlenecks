@@ -1,19 +1,19 @@
-import streamlit as st
-import numpy as np
 import pandas as pd
-import tensorflow as tf
-import joblib
 import os
 os.environ['TF_USE_LEGACY_KERAS'] = '1'
 
-# Configuration
-st.set_page_config(page_title="Diagnostic Goulots BPI 2017", layout="wide")
+import streamlit as st
+import tensorflow as tf
+import numpy as np
+import joblib
+
+# Utilisation de l'import direct du moteur de sauvegarde Keras 2
+from tensorflow.keras.models import load_model
 
 @st.cache_resource
 def load_resources():
-    from tensorflow.python.keras.models import load_model
-    
-    model = tf.keras.models.load_model('models/model_multi_task.keras')
+    # On charge le modèle avec compile=False pour éviter les erreurs d'optimiseur
+    model = load_model('models/model_multi_task.keras', compile=False)
     le_act = joblib.load('models/le_act.joblib')
     scaler_time = joblib.load('models/scaler_time.joblib')
     X_test = np.load('models/X_test.npy')
