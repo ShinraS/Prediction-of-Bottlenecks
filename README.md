@@ -24,7 +24,7 @@ Le projet est structuré de manière à séparer la phase de recherche (Notebook
 
 Ce dossier contient la démarche scientifique et technique étape par étape :
 
-* **eda.ipynb** : Analyse exploratoire des données. Ce notebook documente la compréhension du processus métier et l'identification statistique du seuil critique de 21 heures.
+* **eda.IPYNB** : Analyse exploratoire des données. Ce notebook documente la compréhension du processus métier et l'identification statistique du seuil critique de 21 heures.
 * **Preprocessing.ipynb** : Nettoyage et transformation des logs bruts. Il contient la logique de création des séquences temporelles utilisées pour entraîner l'intelligence artificielle.
 * **Modeling.ipynb** : Architecture et entraînement du modèle LSTM. Il présente les courbes d'apprentissage et l'évaluation de la précision du modèle multi-tâches.
 
@@ -53,3 +53,4 @@ Le modèle considère qu'un goulot d'étranglement est détecté lorsque le dél
 L'application ne se contente pas de donner un chiffre ; elle interprète le flux. Par exemple, des répétitions d'étapes avec un délai de 0 heure sont analysées comme des activités de routine normales (appels téléphoniques successifs), tandis qu'un retour à une étape précédente avec un délai important est signalé comme une anomalie de "re-work" (retraitement).
 
 ---
+
