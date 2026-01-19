@@ -1,0 +1,8 @@
+BPI_Challenge.xes
+bpi_2017_cleaned.parquet
+X_train.npy
+y_act_train.npy
+y_time_train.npy
+y_act_test.npy
+y_time_test.npy
+y_time_test.npy
