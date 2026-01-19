@@ -3,25 +3,14 @@ import numpy as np
 import joblib
 import os
 
-# Configuration pour éviter les conflits Keras 3
+# Toujours forcer le mode legacy avant d'importer TF
 os.environ['TF_USE_LEGACY_KERAS'] = '1'
-
 import tensorflow as tf
-
-# Nouvelle méthode robuste pour charger le modèle
-def get_load_model():
-    try:
-        from tensorflow.keras.models import load_model
-        return load_model
-    except ImportError:
-        from tensorflow.python.keras.models import load_model
-        return load_model
 
 @st.cache_resource
 def load_resources():
-    loader = get_load_model()
-    # On utilise compile=False car on ne fait que de la prédiction
-    model = loader('models/model_multi_task.keras', compile=False)
+    # On charge avec le moteur standard de TF 2.15
+    model = tf.keras.models.load_model('models/model_multi_task.keras', compile=False)
     le_act = joblib.load('models/le_act.joblib')
     scaler_time = joblib.load('models/scaler_time.joblib')
     X_test = np.load('models/X_test.npy')
