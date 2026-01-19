@@ -1,37 +1,18 @@
 import streamlit as st
 import numpy as np
+import pandas as pd
+import tensorflow as tf
 import joblib
-import os
-import keras
 
-# Forcer le moteur Legacy
-os.environ['TF_USE_LEGACY_KERAS'] = '1'
+# Configuration
+st.set_page_config(page_title="Diagnostic Goulots BPI 2017", layout="wide")
 
 @st.cache_resource
 def load_resources():
-    # Déterminer le dossier actuel du script
-    base_path = os.path.dirname(__file__)
-    
-    # Construire le chemin vers le modèle
-    model_path = os.path.join(base_path, 'models', 'model_multi_task.h5')
-    
-    # Vérification de sécurité pour les logs
-    if not os.path.exists(model_path):
-        st.error(f"Fichier introuvable à l'adresse : {model_path}")
-        # Liste les fichiers pour t'aider à debugger si ça rate
-        st.write("Contenu du dossier models :", os.listdir(os.path.join(base_path, 'models')))
-    
-    model = keras.models.load_model(model_path, compile=False)
-    
-    # Chemins pour les autres fichiers
-    le_path = os.path.join(base_path, 'models', 'le_act.joblib')
-    sc_path = os.path.join(base_path, 'models', 'scaler_time.joblib')
-    xt_path = os.path.join(base_path, 'models', 'X_test.npy')
-    
-    le_act = joblib.load(le_path)
-    scaler_time = joblib.load(sc_path)
-    X_test = np.load(xt_path)
-    
+    model = tf.keras.models.load_model('models/model_multi_task.keras')
+    le_act = joblib.load('models/le_act.joblib')
+    scaler_time = joblib.load('models/scaler_time.joblib')
+    X_test = np.load('models/X_test.npy')
     return model, le_act, scaler_time, X_test
 
 model, le_act, scaler_time, X_test = load_resources()

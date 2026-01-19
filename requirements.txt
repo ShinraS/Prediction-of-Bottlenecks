@@ -1,7 +1,7 @@
-tensorflow-cpu==2.15.0
-keras==2.15.0
 streamlit
 pandas
-numpy<2.0
+numpy
+tensorflow
 scikit-learn
 joblib
+pyarrow
