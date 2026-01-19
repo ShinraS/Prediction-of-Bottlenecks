@@ -3,17 +3,17 @@ import numpy as np
 import joblib
 import os
 
-# Forcer l'ancien moteur Keras
+# Indispensable pour lire les vieux modèles .h5
 os.environ['TF_USE_LEGACY_KERAS'] = '1'
 
 import keras
-# On n'importe PAS tensorflow.keras ici pour éviter le bug
 
 @st.cache_resource
 def load_resources():
-    model_path = 'models/model_multi_task.keras'
+    # On change l'extension ici en .h5
+    model_path = 'models/model_multi_task.h5'
     
-    # On utilise UNIQUEMENT l'objet keras importé en haut
+    # On charge en forçant le moteur H5
     model = keras.models.load_model(model_path, compile=False)
     
     le_act = joblib.load('models/le_act.joblib')
