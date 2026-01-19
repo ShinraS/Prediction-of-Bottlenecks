@@ -2,23 +2,36 @@ import streamlit as st
 import numpy as np
 import joblib
 import os
-
-# Indispensable pour lire les vieux modèles .h5
-os.environ['TF_USE_LEGACY_KERAS'] = '1'
-
 import keras
+
+# Forcer le moteur Legacy
+os.environ['TF_USE_LEGACY_KERAS'] = '1'
 
 @st.cache_resource
 def load_resources():
-    # On change l'extension ici en .h5
-    model_path = 'models/model_multi_task.h5'
+    # Déterminer le dossier actuel du script
+    base_path = os.path.dirname(__file__)
     
-    # On charge en forçant le moteur H5
+    # Construire le chemin vers le modèle
+    model_path = os.path.join(base_path, 'models', 'model_multi_task.h5')
+    
+    # Vérification de sécurité pour les logs
+    if not os.path.exists(model_path):
+        st.error(f"Fichier introuvable à l'adresse : {model_path}")
+        # Liste les fichiers pour t'aider à debugger si ça rate
+        st.write("Contenu du dossier models :", os.listdir(os.path.join(base_path, 'models')))
+    
     model = keras.models.load_model(model_path, compile=False)
     
-    le_act = joblib.load('models/le_act.joblib')
-    scaler_time = joblib.load('models/scaler_time.joblib')
-    X_test = np.load('models/X_test.npy')
+    # Chemins pour les autres fichiers
+    le_path = os.path.join(base_path, 'models', 'le_act.joblib')
+    sc_path = os.path.join(base_path, 'models', 'scaler_time.joblib')
+    xt_path = os.path.join(base_path, 'models', 'X_test.npy')
+    
+    le_act = joblib.load(le_path)
+    scaler_time = joblib.load(sc_path)
+    X_test = np.load(xt_path)
+    
     return model, le_act, scaler_time, X_test
 
 model, le_act, scaler_time, X_test = load_resources()
