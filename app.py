@@ -11,6 +11,8 @@ st.set_page_config(page_title="Diagnostic Goulots BPI 2017", layout="wide")
 
 @st.cache_resource
 def load_resources():
+    from tensorflow.python.keras.models import load_model
+    
     model = tf.keras.models.load_model('models/model_multi_task.keras')
     le_act = joblib.load('models/le_act.joblib')
     scaler_time = joblib.load('models/scaler_time.joblib')
